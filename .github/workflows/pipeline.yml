@@ -1,0 +1,35 @@
+name: Market Sentinel Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  drift-and-train:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run Data Ingestion
+        run: python src/data_ingestion.py
+
+      - name: Run Drift Detection
+        id: drift
+        run: python src/drift_detection.py
+        continue-on-error: true
+
+      - name: Train Model If Drift Detected
+        if: failure()
+        run: python src/model_train.py

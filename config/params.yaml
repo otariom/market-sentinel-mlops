@@ -1,0 +1,29 @@
+# config/params.yaml
+
+data:
+  raw_data_path: "data/raw_data.csv"
+  reference_data_path: "data/reference_data.csv"
+  processed_data_path: "data/processed_data.csv"
+
+model:
+  target_column: "UnitPrice"
+  test_size: 0.2
+  random_state: 42
+  xgboost_params:
+    n_estimators: 200
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+
+drift:
+  drift_threshold: 0.2
+  min_drifted_features: 3
+
+mlflow:
+  experiment_name: "Market_Sentinel_Experiment"
+  tracking_uri: "file:./mlruns"
+
+deployment:
+  model_dir: "models/"
+  production_model_name: "market_sentinel_model"
