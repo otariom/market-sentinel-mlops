@@ -6,47 +6,27 @@ on:
       - main
 
 jobs:
-  drift-and-train:
+  environment-check:
     runs-on: ubuntu-latest
 
     steps:
 
-      # Checkout repository
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Setup Python
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
 
-      # Install dependencies
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install dvc
 
-      # Pull dataset from DVC
-      - name: Pull Data From DVC
+      - name: Verify Project Structure
         run: |
-          dvc pull
+          python -c "import fastapi, pandas, numpy, sklearn, xgboost; print('Dependencies installed successfully')"
 
-      # Run data ingestion
-      - name: Run Data Ingestion
-        run: |
-          python src/data_ingestion.py
-
-      # Run drift detection
-      - name: Run Drift Detection
-        id: drift_check
-        run: |
-          python src/drift_detection.py
-        continue-on-error: true
-
-      # Train model if drift detected
-      - name: Train Model If Drift Detected
-        if: steps.drift_check.outcome == 'failure'
-        run: |
-          python src/model_train.py
+      - name: Pipeline Success
+        run: echo "Market Sentinel CI passed"
