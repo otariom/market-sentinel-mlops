@@ -7,8 +7,8 @@ def load_config(config_path="config/params.yaml"):
     with open(config_path, "r") as f:
         return yaml.safe_load(f)
 
-
-def run_data_ingestion():
+  
+def run_data_ingestion():   
     config = load_config()
 
     raw_path = config["data"]["raw_data_path"]
