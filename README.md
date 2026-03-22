@@ -58,8 +58,7 @@ For a BBA or Finance professional, this project serves as a foundation for:
 ├── Dockerfile           # Environment Containerization
 └── requirements.txt     # Dependency Management
 ****
-
-
+```
 🚦 Quick Start
 1. Local Setup
 Bash
@@ -80,3 +79,23 @@ docker run -p 8000:8000 market-sentinel
 
 🛠️ Technologies
 Python | XGBoost | FastAPI | Streamlit | Docker | GitHub Actions | Scipy
+
+
+
+##🌍 Country Frequency Reference Guide
+
+To perform an accurate prediction, use the **Frequency Value** that corresponds to your target market. These values represent the statistical "weight" or market share of each region within the training dataset.
+
+| Country | Frequency Value | Market Classification |
+| :--- | :--- | :--- |
+| **United Kingdom** | `0.910` | Primary Market (Tier 1) |
+| **Germany** | `0.023` | Established (Tier 2) |
+| **France** | `0.021` | Established (Tier 2) |
+| **EIRE (Ireland)** | `0.018` | Established (Tier 2) |
+| **India / SE Asia** | `0.120` | Growth Market |
+| **Spain** | `0.006` | Emerging (Tier 3) |
+| **Belgium** | `0.005` | Emerging (Tier 3) |
+| **Switzerland** | `0.004` | Emerging (Tier 3) |
+| **All Other Markets**| `0.001` | Baseline / New Entry |
+
+> **💡 Developer Note:** If you are testing a country not listed above, use the **Baseline (`0.001`)** value. This ensures the XGBoost model treats the transaction as a "cold-start" market entry without skewing the global revenue average.
